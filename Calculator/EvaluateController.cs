@@ -8,6 +8,6 @@ public class EvaluateController : ControllerBase
 {
     public int Get()
     {
-        throw new NotImplementedException();
+        return 0;
     }
 }
