@@ -60,9 +60,13 @@ public class CalculationService : ICalculationService
 
     private static void ReplaceCalculatedElements(List<string> elementStrings, int i, double evaluatedValue)
     {
+        // Removes the number before the operator
         elementStrings.RemoveAt(i - 1);
+        // Removes the operator
         elementStrings.RemoveAt(i - 1);
+        // Removes the number after the operator
         elementStrings.RemoveAt(i - 1);
+        // Inserts the new value back into the array where the previous part of the expression stood
         elementStrings.Insert(i - 1, evaluatedValue.ToString(CultureInfo.InvariantCulture));
     }
 
