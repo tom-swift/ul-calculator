@@ -1,11 +1,10 @@
 using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Calculator;
 
 [ApiController]
-[Microsoft.AspNetCore.Mvc.Route("[controller]")]
+[Route("[controller]")]
 public class EvaluateController : ControllerBase    
 {
     public double Get(string inputExpression)
@@ -17,32 +16,47 @@ public class EvaluateController : ControllerBase
         var operators = new[] { "+", "-" };
         var elementStrings = Regex.Split(inputExpression, @"([+\-*/])").ToArray();
 
+        var output = Calculate(elementStrings, operators);
+
+        return output;
+    }
+
+    private static double Calculate(string[] elementStrings, string[] operators)
+    {
         var output = Convert.ToDouble(elementStrings[0]);
         var currentOperator = "";
 
         for (var i = 1; i < elementStrings.Length;)
         {
-            if (operators.Contains(elementStrings[i]))
+            var currentElement = elementStrings[i];
+            if (operators.Contains(currentElement))
             {
-                currentOperator = elementStrings[i];
+                currentOperator = currentElement;
             }
             else
             {
-                double number = double.Parse(elementStrings[i]);
-                switch (currentOperator)
-                {
-                    case "+":
-                        output += number;
-                        break;
-                    case "-":
-                        output -= number;
-                        break;
-                }
+                output = ApplyOperator(currentElement, currentOperator, output);
             }
 
             i++;
         }
-        
+
+        return output;
+    }
+
+    private static double ApplyOperator(string elementString, string currentOperator, double output)
+    {
+        var number = double.Parse(elementString);
+        switch (currentOperator)
+        {
+            case "+":
+                output += number;
+                break;
+            case "-":
+                output -= number;
+                break;
+        }
+
         return output;
     }
 }
