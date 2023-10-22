@@ -1,7 +1,3 @@
-using AutoFixture;
-using FluentAssertions;
-using Moq.AutoMock;
-
 namespace Calculator.Tests;
 
 public class EvaluateControllerTests
