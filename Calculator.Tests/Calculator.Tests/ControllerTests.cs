@@ -9,7 +9,9 @@ public class EvaluateControllerTests
     [InlineData("", 0)]
     [InlineData("1", 1)]
     [InlineData("25", 25)]
-    public void BlankString_Returns_Zero(string input, double expectedOutput)
+    [InlineData("1+1", 2)]
+    [InlineData("1+1+1", 3)]
+    public void InputString_Returns_ExpectedOutput(string input, double expectedOutput)
     {
         // Arrange
         var subject = _mocker.CreateInstance<EvaluateController>();
