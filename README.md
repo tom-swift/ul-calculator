@@ -25,4 +25,16 @@ There are certain things I want to achieve in this code test. The below will beh
 
 ## Approach Taken
 
+My initial thoughts on this test were "Hmmm I'm sure I've done this with DataTables before" and a short google search later told me that yes, I could do `Convert.ToDouble(new DataTable().Compute(input, null));` and it would pass all the tests I needed it to in this kata.
+However, that felt like cheating so I spent a short while remembering how to do maths again properly.
+This led to the commit history in this repo which I hope explains a bit about my thinking when I was working through this exercise.
+
+My next steps with this project would probably be to continue refactoring out the CalculationService particularly simplifying ther methods in there so that the tests would be focussed enough to add other functionality to the calculator such as a modulous operator.
+
+There is also a considerable amount of unhappy path testing and validation required here, but time ran a little short on me.
+
+On a similar note, I would also add some boundary tests for some confidence moving forward into maintenance mode.
+
 ## Learnings
+
+As always, much of my time was spent really understanding the problem after realising that I couldn't just use DataTables. I probably spent a bit too long thinking about "Oh god, just get it working" early on in the process, but I genuinely believe the small TDD commits were the only thing that enabled me to get my head around this problem.
