@@ -1,35 +1,12 @@
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Calculator.Tests;
 
-public class EvaluateControllerTests
+public class CalculationServiceTests
 {
+    private readonly Fixture _fixture = new();
     private readonly AutoMocker _mocker = new();
-    
-    [Fact]
-    public void IndexAction_ShouldHaveHttpGetAttribute()
-    {
-        // Arrange
-        var controllerType = typeof(EvaluateController);
-        var methodInfo = controllerType.GetMethod("Get");
-
-        // Act & Assert
-        methodInfo.Should().BeDecoratedWith<HttpGetAttribute>();
-    }
-
-    [Theory]
-    [InlineData("", 0)]
-    public void EmptyInputString_Returns_ExpectedOutput(string input, double expectedOutput)
-    {
-        // Arrange
-        var subject = _mocker.CreateInstance<EvaluateController>();
-
-        // Act
-        var result = subject.Get(input);
-
-        // Assert
-        result.Should().Be(expectedOutput);
-    }
     
     [Theory]
     [InlineData("1", 1)]
@@ -37,11 +14,13 @@ public class EvaluateControllerTests
     public void SingleNumberInputString_Returns_ExpectedOutput(string input, double expectedOutput)
     {
         // Arrange
-        var subject = _mocker.CreateInstance<EvaluateController>();
-
+        var subject = _mocker.CreateInstance<CalculationService>();
+        var inputList = Regex.Split(input, @"([+\-*/])").ToList();
+        var operators = new[] { "+", "-", "*", "/" };
+    
         // Act
-        var result = subject.Get(input);
-
+        var result = subject.Calculate(inputList, operators);
+    
         // Assert
         result.Should().Be(expectedOutput);
     }
@@ -58,11 +37,13 @@ public class EvaluateControllerTests
     public void SingleOperatorTypeInputString_Returns_ExpectedOutput(string input, double expectedOutput)
     {
         // Arrange
-        var subject = _mocker.CreateInstance<EvaluateController>();
-
+        var subject = _mocker.CreateInstance<CalculationService>();
+        var inputList = Regex.Split(input, @"([+\-*/])").ToList();
+        var operators = new[] { "+", "-", "*", "/" };
+    
         // Act
-        var result = subject.Get(input);
-
+        var result = subject.Calculate(inputList, operators);
+    
         // Assert
         result.Should().Be(expectedOutput);
     }
@@ -74,11 +55,13 @@ public class EvaluateControllerTests
     public void MultipleOperatorTypeInputString_Returns_ExpectedOutput(string input, double expectedOutput)
     {
         // Arrange
-        var subject = _mocker.CreateInstance<EvaluateController>();
-
+        var subject = _mocker.CreateInstance<CalculationService>();
+        var inputList = Regex.Split(input, @"([+\-*/])").ToList();
+        var operators = new[] { "+", "-", "*", "/" };
+    
         // Act
-        var result = subject.Get(input);
-
+        var result = subject.Calculate(inputList, operators);
+    
         // Assert
         result.Should().Be(expectedOutput);
     }
@@ -90,11 +73,13 @@ public class EvaluateControllerTests
     public void Example_Tests(string input, double expectedOutput)
     {
         // Arrange
-        var subject = _mocker.CreateInstance<EvaluateController>();
-
+        var subject = _mocker.CreateInstance<CalculationService>();
+        var inputList = Regex.Split(input, @"([+\-*/])").ToList();
+        var operators = new[] { "+", "-", "*", "/" };
+    
         // Act
-        var result = subject.Get(input);
-
+        var result = subject.Calculate(inputList, operators);
+    
         // Assert
         result.Should().Be(expectedOutput);
     }
