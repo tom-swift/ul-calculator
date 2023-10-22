@@ -56,7 +56,25 @@ public class EvaluateControllerTests
     
     [Theory]
     [InlineData("2-1+1", 2)]
+    [InlineData("3+1/2", 3.5)]
+    [InlineData("3+1/2/2", 3.25)]
     public void MultipleOperatorTypeInputString_Returns_ExpectedOutput(string input, double expectedOutput)
+    {
+        // Arrange
+        var subject = _mocker.CreateInstance<EvaluateController>();
+
+        // Act
+        var result = subject.Get(input);
+
+        // Assert
+        result.Should().Be(expectedOutput);
+    }
+    
+    [Theory]
+    [InlineData("4+5*2", 14)]
+    [InlineData("4+5/2", 6.5)]
+    [InlineData("4+5/2-1", 5.5)]
+    public void Example_Tests(string input, double expectedOutput)
     {
         // Arrange
         var subject = _mocker.CreateInstance<EvaluateController>();
