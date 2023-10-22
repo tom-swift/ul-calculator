@@ -11,6 +11,7 @@ public class EvaluateControllerTests
     [InlineData("25", 25)]
     [InlineData("1+1", 2)]
     [InlineData("1+1+1", 3)]
+    [InlineData("2-1", 1)]
     public void InputString_Returns_ExpectedOutput(string input, double expectedOutput)
     {
         // Arrange
