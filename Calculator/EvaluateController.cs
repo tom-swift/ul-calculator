@@ -24,46 +24,15 @@ public class EvaluateController : ControllerBase
 
     private static double Calculate(List<string> elementStrings, string[] operators)
     {
-        var output = Convert.ToDouble(elementStrings[0]);
+        EvaluateDivideMultiples(elementStrings);
+        return elementStrings.Count == 1 ? Convert.ToDouble(elementStrings[0]) : EvaluatePlusMinus(elementStrings, operators);
+    }
+
+    private static double EvaluatePlusMinus(List<string> elementStrings, string[] operators)
+    {
         var currentOperator = "";
+        var output = Convert.ToDouble(elementStrings[0]);
 
-        // evaluate division first
-        for (var i = 1; i < elementStrings.Count;)
-        {
-            var currentElement = elementStrings[i];
-            if(currentElement == "/")
-            {
-                var evaluatedValue = Convert.ToDouble(elementStrings[i-1])/Convert.ToDouble(elementStrings[i+1]);
-                elementStrings.RemoveAt(i-1);
-                elementStrings.RemoveAt(i-1);
-                elementStrings.RemoveAt(i-1);
-                elementStrings.Insert(i-1, evaluatedValue.ToString(CultureInfo.InvariantCulture));
-                i--;
-            }
-
-            i++;
-        }
-        
-        // evaluate multiplications
-        for (var i = 1; i < elementStrings.Count;)
-        {
-            var currentElement = elementStrings[i];
-            if(currentElement == "*")
-            {
-                var evaluatedValue = Convert.ToDouble(elementStrings[i-1])*Convert.ToDouble(elementStrings[i+1]);
-                elementStrings.RemoveAt(i-1);
-                elementStrings.RemoveAt(i-1);
-                elementStrings.RemoveAt(i-1);
-                elementStrings.Insert(i-1, evaluatedValue.ToString(CultureInfo.InvariantCulture));
-                i--;
-            }
-
-            i++;
-        }
-
-        if (elementStrings.Count == 1) return Convert.ToDouble(elementStrings[0]);
-        
-        // evaluate +-
         for (var i = 1; i < elementStrings.Count;)
         {
             var currentElement = elementStrings[i];
@@ -80,6 +49,39 @@ public class EvaluateController : ControllerBase
         }
 
         return output;
+    }
+
+    private static void EvaluateDivideMultiples(List<string> elementStrings)
+    {
+        for (var i = 1; i < elementStrings.Count; i++)
+        {
+            var currentElement = elementStrings[i];
+            switch (currentElement)
+            {
+                case "/":
+                {
+                    var evaluatedValue = Convert.ToDouble(elementStrings[i - 1]) / Convert.ToDouble(elementStrings[i + 1]);
+                    ReplaceCalculatedElements(elementStrings, i, evaluatedValue);
+                    i--;
+                    break;
+                }
+                case "*":
+                {
+                    var evaluatedValue = Convert.ToDouble(elementStrings[i - 1]) * Convert.ToDouble(elementStrings[i + 1]);
+                    ReplaceCalculatedElements(elementStrings, i, evaluatedValue);
+                    i--;
+                    break;
+                }
+            }
+        }
+    }
+
+    private static void ReplaceCalculatedElements(List<string> elementStrings, int i, double evaluatedValue)
+    {
+        elementStrings.RemoveAt(i - 1);
+        elementStrings.RemoveAt(i - 1);
+        elementStrings.RemoveAt(i - 1);
+        elementStrings.Insert(i - 1, evaluatedValue.ToString(CultureInfo.InvariantCulture));
     }
 
     private static double ApplyBasicOperator(string elementString, string currentOperator, double output)
