@@ -13,7 +13,7 @@ public class EvaluateController : ControllerBase
         // of future development around the issue
         if (inputExpression == "") return 0;
 
-        var operators = new[] { "+", "-" };
+        var operators = new[] { "+", "-", "*" };
         var elementStrings = Regex.Split(inputExpression, @"([+\-*/])").ToArray();
 
         var output = Calculate(elementStrings, operators);
@@ -54,6 +54,9 @@ public class EvaluateController : ControllerBase
                 break;
             case "-":
                 output -= number;
+                break;
+            case "*":
+                output *= number;
                 break;
         }
 
