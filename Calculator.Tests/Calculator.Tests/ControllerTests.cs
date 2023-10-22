@@ -7,13 +7,15 @@ public class EvaluateControllerTests
 
     [Theory]
     [InlineData("", 0)]
+    [InlineData("1", 1)]
+    [InlineData("25", 25)]
     public void BlankString_Returns_Zero(string input, double expectedOutput)
     {
         // Arrange
         var subject = _mocker.CreateInstance<EvaluateController>();
 
         // Act
-        var result = subject.Get("");
+        var result = subject.Get(input);
 
         // Assert
         result.Should().Be(expectedOutput);
