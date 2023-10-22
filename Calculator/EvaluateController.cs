@@ -6,7 +6,7 @@ namespace Calculator;
 [Route("[controller]")]
 public class EvaluateController : ControllerBase    
 {
-    public int Get()
+    public double Get(string inputExpression)
     {
         return 0;
     }
