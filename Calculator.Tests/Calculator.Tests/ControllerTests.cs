@@ -40,6 +40,8 @@ public class EvaluateControllerTests
     [InlineData("1-1", 0)]
     [InlineData("1*1", 1)]
     [InlineData("1*2", 2)]
+    [InlineData("1/1", 1)]
+    [InlineData("2/1", 2)]
     public void SingleOperatorTypeInputString_Returns_ExpectedOutput(string input, double expectedOutput)
     {
         // Arrange
