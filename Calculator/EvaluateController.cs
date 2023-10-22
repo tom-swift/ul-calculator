@@ -8,6 +8,7 @@ namespace Calculator;
 [Route("[controller]")]
 public class EvaluateController : ControllerBase    
 {
+    [HttpGet]
     public double Get(string inputExpression)
     {
         // I would probably also log the occurrences of this to determine the value

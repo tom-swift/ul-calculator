@@ -1,8 +1,21 @@
+using Microsoft.AspNetCore.Mvc;
+
 namespace Calculator.Tests;
 
 public class EvaluateControllerTests
 {
     private readonly AutoMocker _mocker = new();
+    
+    [Fact]
+    public void IndexAction_ShouldHaveHttpGetAttribute()
+    {
+        // Arrange
+        var controllerType = typeof(EvaluateController);
+        var methodInfo = controllerType.GetMethod("Get");
+
+        // Act & Assert
+        methodInfo.Should().BeDecoratedWith<HttpGetAttribute>();
+    }
 
     [Theory]
     [InlineData("", 0)]
